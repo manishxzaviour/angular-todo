@@ -1,1 +1,55 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
+
+
+/* manual styling as tailwind overrides*/
+h1, h2, h3, h4, h5, h6 {
+    @apply text-2xl font-bold;
+  }
+  
+  p {
+    @apply text-base;
+  }
+  
+  a {
+    @apply text-blue-500 underline;
+  }
+  
+  blockquote {
+    @apply border-l-4 border-gray-300 pl-4 italic;
+  }
+  
+  ul, ol {
+    @apply list-disc pl-5;
+  }
+  
+  li {
+    @apply mb-2;
+  }
+  
+  code {
+    @apply bg-gray-100 text-red-600 px-1 rounded;
+  }
+  
+  pre {
+    @apply bg-gray-800 text-white p-2 rounded overflow-auto;
+  }
+  
+  img {
+    @apply max-w-full h-auto;
+  }
+  
+  table {
+    @apply w-full text-left border-collapse;
+  }
+  
+  th, td {
+    @apply border border-gray-300 px-4 py-2;
+  }
+  
+  hr {
+    @apply border-t-2 border-gray-300 my-4;
+  }
+  
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
