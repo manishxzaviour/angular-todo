@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { SidebarItemComponent } from './sidebar-item/sidebar-item.component';
 import { MatIconModule } from '@angular/material/icon';
+import { BeanItemComponent } from '../bean-item/bean-item.component';
+import { RouterOutlet, RouterLink ,RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [SidebarItemComponent, MatIconModule],
+  imports: [BeanItemComponent, MatIconModule, RouterLink, RouterLinkActive],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })

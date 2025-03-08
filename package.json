@@ -23,7 +23,7 @@
     "marked": "^15.0.7",
     "ng-autosize": "^1.1.0",
     "postcss": "^8.5.3",
-    "rxjs": "~7.8.0",
+    "rxjs": "~7.8.2",
     "tailwindcss": "^4.0.9",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

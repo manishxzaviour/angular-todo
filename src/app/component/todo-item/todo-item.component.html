@@ -1,0 +1,29 @@
+<div class="bg-emerald-400 text-white rounded-2xl p-3">
+    <div class="flex flex-row justify-between">
+        <div class="text-2xl">
+            {{item.subject}}
+            <button>
+
+                </button>
+        </div>
+        <div *ngIf="!optionsDisplayed" (click)="optionsDisplayed=!optionsDisplayed" class="cursor-pointer hover:scale-120" title="options">
+            <mat-icon>more_horiz</mat-icon>
+        </div>
+        <div *ngIf="optionsDisplayed" class="flex flex-row">
+            <button type="button" class="cursor-pointer hover:scale-120 m-0.5" title="set a reminder">
+                <mat-icon>add_alert</mat-icon>
+            </button>
+            <button type="button" class="cursor-pointer m-0.5 hover:scale-120" title="add a tag">
+                <mat-icon>library_add</mat-icon>
+            </button>
+            <button type="button" class="cursor-pointer m-0.5 hover:scale-120" title="mark as done">
+                <mat-icon>done</mat-icon>
+            </button>
+            <button type="button" class="cursor-pointer m-0.5 hover:scale-120" title="move to recycle bin">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="m-1" [innerHtml]="parsedMD">
+    </div>
+</div>

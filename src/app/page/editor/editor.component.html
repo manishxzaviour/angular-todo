@@ -1,0 +1,25 @@
+<!-- markdown-editor.component.html -->
+<div class="h-full m-2">
+    <div class="z-10 m-3 flex flex-row justify-end ">
+      <app-bean-item (click)="onOptionClick()">
+        {{option}}
+      </app-bean-item>
+      <app-bean-item (click)="onAddClick()">
+        <mat-icon>note_add</mat-icon>
+      </app-bean-item>
+      <app-bean-item (click)="onReminderClick()">
+        <mat-icon>add_alert</mat-icon>
+      </app-bean-item>
+    </div>
+    <div class="bg-emerald-400">
+      <div *ngIf="option !== 'Editor'" class="w-full min-h-3/12 p-2 border-2 border-emerald-300 rounded-2xl drop-shadow-lg text-blue-700 bg-amber-100">
+        <textarea [(ngModel)]="markdownText" 
+        placeholder="Enter your note here"
+        class="w-full h-full p-2 border-2 rounded-lg"
+        ></textarea>
+      </div>
+      <div *ngIf="option !== 'MD Preview'" class="w-full p-2 border-2 border-emerald-300 rounded-2xl drop-shadow-lg text-blue-700 bg-amber-100" [innerHtml]="convertedMarkdown">
+      </div>
+    </div>
+</div>
+  

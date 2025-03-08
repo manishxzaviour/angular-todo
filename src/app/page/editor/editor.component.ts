@@ -3,14 +3,13 @@ import * as marked from 'marked';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';  
 import {MatIconModule} from '@angular/material/icon'
-import { SidebarItemComponent } from '../sidebar/sidebar-item/sidebar-item.component';
-
+import { BeanItemComponent } from '../../component/bean-item/bean-item.component';
 
 @Component({
   selector: 'app-markdown-editor',
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.css'],
-  imports: [FormsModule, CommonModule, MatIconModule, SidebarItemComponent]
+  imports: [FormsModule, CommonModule, MatIconModule, BeanItemComponent]
 })
 export class EditorComponent {
   markdownText: string = '';
@@ -39,10 +38,16 @@ export class EditorComponent {
 
   onOptionClick() {
     this.option = this.option === 'MD Preview' ? 'Editor' : 'MD Preview';
+    if(this.option === 'Editor'){
+      this.convertedMarkdown = marked.parse(this.markdownText).toString();
+      this.convertedMarkdown = this.convertedMarkdown.replace(/\n/g, '<br>');
+    }
+  }
+  onAddClick(){
+
   }
 
-  updateMarkdown() {
-    this.convertedMarkdown = marked.parse(this.markdownText).toString();
-    this.convertedMarkdown = this.convertedMarkdown.replace(/\n/g, '<br>');
+  onReminderClick(){
+    
   }
 }
