@@ -13,8 +13,9 @@
     </div>
     <div class="bg-emerald-400">
       <div *ngIf="option !== 'Editor'" class="w-full min-h-3/12 p-2 border-2 border-emerald-300 rounded-2xl drop-shadow-lg text-blue-700 bg-amber-100">
+        <input type="text" class="m-1 w-full text-2xl border-2 border-emerald-200 rounded-2xl p-2" [(ngModel)]="title" placeholder="enter a unique title for you note"/>
         <textarea [(ngModel)]="markdownText" 
-        placeholder="Enter your note here"
+        placeholder="Enter your note here [supports markdown]"
         class="w-full h-full p-2 border-2 rounded-lg"
         ></textarea>
       </div>

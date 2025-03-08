@@ -226,10 +226,6 @@ const data: TodoItem[] =  [
       "subject":"2",
       "description": "2d",
       "tags": [
-        {
-          "id": 100, 
-          "name":"feb"
-        },
       ],
       "completionStatus": false,
       "setForReminder": true,

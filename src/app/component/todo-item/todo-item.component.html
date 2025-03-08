@@ -1,10 +1,17 @@
 <div class="bg-emerald-400 text-white rounded-2xl p-3">
     <div class="flex flex-row justify-between">
-        <div class="text-2xl">
+        <div class="text-2xl flex flex-row">
             {{item.subject}}
-            <button>
-
-                </button>
+            <div *ngIf="item.tags.length!=0" 
+            class="text-sm mx-2 text-emerald-100 rounded-2xl p-1 cursor-pointer text-center" >
+                <mat-icon class="hover:scale-150" title="tags" (click)="showTags=!showTags">keyboard_arrow_down</mat-icon>
+                <div class="flex flex-row" *ngIf="showTags">
+                    Tags: 
+                    <div *ngFor="let tag of item.tags">
+                       &nbsp;{{tag.name}} |
+                    </div>
+                </div>
+            </div>
         </div>
         <div *ngIf="!optionsDisplayed" (click)="optionsDisplayed=!optionsDisplayed" class="cursor-pointer hover:scale-120" title="options">
             <mat-icon>more_horiz</mat-icon>
@@ -19,7 +26,7 @@
             <button type="button" class="cursor-pointer m-0.5 hover:scale-120" title="mark as done">
                 <mat-icon>done</mat-icon>
             </button>
-            <button type="button" class="cursor-pointer m-0.5 hover:scale-120" title="move to recycle bin">
+            <button type="button" class="cursor-pointer m-0.5 hover:scale-120" title="move to recycle bin" (click)="onClickDelete()">
                 <mat-icon>delete</mat-icon>
             </button>
         </div>

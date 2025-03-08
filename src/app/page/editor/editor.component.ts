@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';  
 import {MatIconModule} from '@angular/material/icon'
 import { BeanItemComponent } from '../../component/bean-item/bean-item.component';
+import { TodoServiceService } from './../../service/todo-service.service';
+import { TodoItem } from '../../models/todo-item';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-markdown-editor',
@@ -15,6 +18,9 @@ export class EditorComponent {
   markdownText: string = '';
   convertedMarkdown: string = '';
   option: string = 'MD Preview';
+  title: string = '';
+
+  constructor(private todoServie : TodoServiceService, private router: Router){}
 
   @HostListener('keydown', ['$event'])
   handleKeydown(event: KeyboardEvent): void {
@@ -41,10 +47,16 @@ export class EditorComponent {
     if(this.option === 'Editor'){
       this.convertedMarkdown = marked.parse(this.markdownText).toString();
       this.convertedMarkdown = this.convertedMarkdown.replace(/\n/g, '<br>');
+      this.convertedMarkdown = `<h1>${this.title}</h1><br>`+this.convertedMarkdown;
     }
   }
   onAddClick(){
-
+    const item: Partial<TodoItem> = {
+      subject: this.title,
+      description: this.markdownText
+    }
+    this.todoServie.addItem(item);
+    this.router.navigate(['/home']);
   }
 
   onReminderClick(){
