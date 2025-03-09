@@ -1,4 +1,4 @@
-<div class="flex flex-row flex-wrap h-fi/t max-h-screen scroll-auto overflow-scroll scroll-m-11 justify-center">
+<div class="flex flex-row flex-wrap h-full scroll-auto overflow-scroll justify-center">
     <span *ngIf="fromBin" class=" flex-auto text-center text-3xl w-full m-2 text-amber-700">Local recycle bin
         <a routerLink="/bin/clear" routerLinkActive="active" ariaCurrentWhenActive="page" title="clear the recycle bin"> clear </a>
     </span>
@@ -11,10 +11,10 @@
             <li>Markdown formating for todo item description</li>
             <li> can be used standalone as it uses indexDB api</li>
             <li> fast search with mysql fulltext search in backend</li>
-            <li> advanced filtering with tags</li>
+            <li> advanced filtering with tags <br>[format -> searchQuery followed by !Tags: your tags seperated by ',']</li>
         </ul>
     </span>
-    <div *ngFor="let todoItem of itemList" class="flex-auto mx-1 my-0.5 drop-shadow-sm">
+    <div *ngFor="let todoItem of itemList" class="flex-auto mx-2 my-0.5 drop-shadow-sm max-w-full">
         <app-todo-item [item]="todoItem"/>
     </div>
 </div>    

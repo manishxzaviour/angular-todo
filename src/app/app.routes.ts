@@ -10,4 +10,5 @@ export const routes: Routes = [
     {path:'home', component: HomeComponent},
     {path: 'bin', component: HomeComponent},
     {path: 'bin/clear', component: HomeComponent},
+    {path:'edit/:id', component: EditorComponent},
 ];

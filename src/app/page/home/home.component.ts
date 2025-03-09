@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TodoItem } from './../../models/todo-item';
 import { TodoServiceService } from './../../service/todo-service.service';
-import data from './sampleData';
 import { CommonModule } from '@angular/common';
 import { TodoItemComponent } from './../../component/todo-item/todo-item.component';
 import { ActivatedRoute, Params, Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -36,7 +35,8 @@ export class HomeComponent implements OnInit, OnDestroy{
           if(x.setForReminder||y.completionStatus) return -1;
           if(y.setForReminder||x.completionStatus) return 1;
           return 0;
-        });        
+        }); 
+               
       },
       (error)=>{
         console.error('error fetching tasks ',error);
@@ -45,11 +45,10 @@ export class HomeComponent implements OnInit, OnDestroy{
 
       this.queryParamsSubscription = this.route.queryParams.subscribe((params: Params) => {
       let searchQuery = params['search'];
-      let tagsParam = params['tags'];
-      let tags = tagsParam ? tagsParam.split(',') : undefined;
-      
+      let tags = params['tag'];
+            
       if(searchQuery || tags)
-      this.todoService.searchTodos(searchQuery, tags?tags:[], this.fromBin).subscribe(
+      this.todoService.searchTodos(searchQuery?searchQuery:'', tags?tags:[], this.fromBin).subscribe(
         (itemList)=>{
               this.itemList = itemList.sort((x,y)=>{
                 if(x.setForReminder||y.completionStatus) return -1;
@@ -62,7 +61,6 @@ export class HomeComponent implements OnInit, OnDestroy{
             }
       );
     });
-    // this.itemList = data;
   }
   ngOnDestroy(): void {
     if (this.todoItemsSubscription) {

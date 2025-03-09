@@ -23,12 +23,13 @@ export class TodoItemComponent implements OnInit {
     creationTimestamp: Date.now().toString(),
     updationTimestamp: Date.now().toString()
   };
-  showTags: boolean = false;
   parsedMD: string = '';
   fromBin: boolean;
   bgColour: string = 'bg-emerald-400';
-
+  tagNameList: string[] = [];
   optionsDisplayed: boolean = false;
+  showTags:boolean = false;
+
   constructor(private todoService: TodoServiceService, private cdr: ChangeDetectorRef, private router: Router) {
     let url = this.router.url;    
     this.fromBin = (url.substring(0,5) !== '/home');
@@ -41,6 +42,9 @@ export class TodoItemComponent implements OnInit {
       this.bgColour = 'bg-blue-300'
     }
     this.parsedMD = marked.parse(this.item.description).toString();
+    this.item.tags.forEach((tag)=>{
+      this.tagNameList.push(' '+tag.name+' ');
+    });
   }
 
   onClickDelete(){
@@ -53,14 +57,33 @@ export class TodoItemComponent implements OnInit {
 
   onClickCompletionStatus(){
     this.item.completionStatus =! this.item.completionStatus;
-    this.todoService.updateItem(this.item);
+    this.updateSave();
   }
 
   onClickSetReminder(){
     this.item.setForReminder =! this.item.setForReminder;
+    this.updateSave();
+  }
+
+  private updateSave(){
     this.todoService.updateItem(this.item);
   }
 
-  onClickAddTag(){
+  onUpdateTags(event: Event){
+    let inputValue = (event.target as HTMLInputElement).value;
+    this.item.tags = [];
+    inputValue.split(',').forEach(
+      (name)=>{
+        this.item.tags.push(
+          {name: name}
+        )
+      }
+    )
+  }
+  onClickTags(){
+    this.showTags = !this.showTags;    
+    if(this.showTags==false){
+      this.updateSave();
+    }
   }
 }
