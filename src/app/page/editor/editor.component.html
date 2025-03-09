@@ -5,7 +5,14 @@
         {{option}}
       </app-bean-item>
       <app-bean-item (click)="onAddClick()" title="save the note">
-        <mat-icon>note_add</mat-icon>
+        <mat-icon>save</mat-icon>
+      </app-bean-item>
+      <app-bean-item>
+      <textarea type="text" *ngIf="showTags" placeholder="add tags here ',' seperated"
+      class="border-b-2 border-b-blue-500 text-blue-900 text-center focus:outline-0" [value]="tagNameList" (input)="onUpdateTags($event)" rows="1"></textarea>
+      <button type="button" class="cursor-pointer m-0.5 hover:scale-120" title="tags" (click)="onClickTags()" >
+          <mat-icon>queue_add</mat-icon>
+      </button>
       </app-bean-item>
       <app-bean-item (click)="onReminderClick()" [title]="!setForReminder?'set reminder':'clear reminder'">
         <mat-icon>{{!setForReminder?'alarm_add':'alarm_off'}}</mat-icon>

@@ -108,8 +108,19 @@ export class TodoServiceService implements OnDestroy{
   addItem(todoItem:  Omit<TodoItem, 'id'>): void {
     if(this.db){
       const txnTodo = this.db?.transaction(['todo_items',], 'readwrite');
-      txnTodo?.objectStore('todo_items').add(todoItem); 
-    }
+      let request = txnTodo?.objectStore('todo_items').add(todoItem); 
+      if(request){
+        request.onsuccess = (event)=>{
+          let target = event.target as IDBRequest;
+          let id = target.result;
+          let todoItemSaved : TodoItem = {
+            id: id,
+            ...todoItem
+          }  
+          this.updateTags(todoItemSaved);
+        }
+      }
+  }
 
     if(this.userservice.getIsLoggedIn())
       this.http.post<TodoItem>(`${this.apiUrl}/todo-items`, todoItem);
@@ -124,28 +135,7 @@ export class TodoServiceService implements OnDestroy{
       request.onsuccess = (event)=>{
         let target = event.target as IDBRequest<TodoItem>;
         if(target.result.tags.join(',') !== todoItem.tags.join(',')){
-          const txnTags = this.db?.transaction(['tags_todo_items',], 'readwrite');
-          let storeTags = txnTags?.objectStore('tags_todo_items')
-          todoItem.tags.forEach(
-            (tag)=>{
-              let name = tag.name.trim();
-              let request = storeTags?.get(name);
-              if(request){
-                request.onsuccess = (event)=>{
-                  let target = event.target as IDBRequest;
-                  if(target.result){
-                    let items = target.result.todo_items;
-                    items.push(todoItem.id);
-                    storeTags?.put({name: name, todo_items : items});
-                  }else{
-                    const txnTags = this.db?.transaction(['tags_todo_items',], 'readwrite');
-                    let storeTags = txnTags?.objectStore('tags_todo_items');
-                    storeTags?.add({name: name, todo_items: [todoItem.id]});
-                  }                  
-                }
-              }
-            }
-          );
+          this.updateTags(todoItem);
         }
         const txn = this.db?.transaction(['todo_items'],'readwrite');
         txn?.objectStore('todo_items').put(todoItem);
@@ -155,6 +145,31 @@ export class TodoServiceService implements OnDestroy{
     
     if(this.userservice.getIsLoggedIn())
       this.http.patch<TodoItem>(`${this.apiUrl}/todo-items/${todoItem.id}`, todoItem); 
+  }
+
+  private updateTags(todoItem: TodoItem): void{
+    const txnTags = this.db?.transaction(['tags_todo_items',], 'readwrite');
+    let storeTags = txnTags?.objectStore('tags_todo_items')
+    todoItem.tags.forEach(
+      (tag)=>{
+        let name = tag.name.trim();
+        let request = storeTags?.get(name);
+        if(request){
+          request.onsuccess = (event)=>{
+            let target = event.target as IDBRequest;
+            if(target.result){
+              let items = target.result.todo_items;
+              items.push(todoItem.id);
+              storeTags?.put({name: name, todo_items : items});
+            }else{
+              const txnTags = this.db?.transaction(['tags_todo_items',], 'readwrite');
+              let storeTags = txnTags?.objectStore('tags_todo_items');
+              storeTags?.add({name: name, todo_items: [todoItem.id]});
+            }                  
+          }
+        }
+      }
+    );
   }
 
   deleteItem(todoItem: TodoItem, fromBin?: boolean): void { 
@@ -246,7 +261,7 @@ export class TodoServiceService implements OnDestroy{
 
     if(this.userservice.getIsLoggedIn()){
        return this.http.post<TodoItem[]>(`${this.apiUrl}/todo-items/search`, {searchQuery: subjectQuery, tags: tagsFilter});
-    }
+   }
     return new Observable<TodoItem[]>((observer)=>{
       const promises: Promise<Set<TodoItem>>[] = [];
       if(subjectQuery.length!=0){

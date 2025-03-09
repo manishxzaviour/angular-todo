@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import * as marked from 'marked';
 import { TodoServiceService } from '../../service/todo-service.service';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-todo-item',
@@ -45,6 +45,13 @@ export class TodoItemComponent implements OnInit {
     this.item.tags.forEach((tag)=>{
       this.tagNameList.push(' '+tag.name+' ');
     });
+  }
+
+  onItemClick(){
+    let extra : NavigationExtras = {
+      state: this.item
+    };
+    this.router.navigate(['/edit'],extra);
   }
 
   onClickDelete(){
