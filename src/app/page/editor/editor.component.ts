@@ -7,6 +7,7 @@ import { BeanItemComponent } from '../../component/bean-item/bean-item.component
 import { TodoServiceService } from './../../service/todo-service.service';
 import { TodoItem } from '../../models/todo-item';
 import { Router } from '@angular/router';
+import { Tag } from '../../models/tag';
 
 @Component({
   selector: 'app-markdown-editor',
@@ -19,6 +20,9 @@ export class EditorComponent {
   convertedMarkdown: string = '';
   option: string = 'MD Preview';
   title: string = '';
+  setForReminder: boolean = false;
+  completionStatus: boolean = false;
+  tagList: Tag[] = [];
 
   constructor(private todoServie : TodoServiceService, private router: Router){}
 
@@ -51,15 +55,24 @@ export class EditorComponent {
     }
   }
   onAddClick(){
-    const item: Partial<TodoItem> = {
+    const item: Omit<TodoItem, 'id'> = {
       subject: this.title,
-      description: this.markdownText
+      description: this.markdownText,
+      tags: this.tagList,
+      completionStatus: this.completionStatus,
+      setForReminder: this.setForReminder,
+      creationTimestamp: new Date(Date.now()).toISOString(),
+      updationTimestamp: new Date(Date.now()).toISOString(),
     }
     this.todoServie.addItem(item);
     this.router.navigate(['/home']);
   }
 
   onReminderClick(){
-    
+    this.setForReminder = !this.setForReminder;
+  }
+
+  onCompletionClick(){
+    this.completionStatus =!this.completionStatus;
   }
 }

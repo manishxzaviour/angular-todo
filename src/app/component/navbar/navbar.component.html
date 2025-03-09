@@ -2,7 +2,7 @@
     <span class="text-blue-50 text-3xl m-3">
         TODO
     </span>
-    <input type="text" class="w-7/12 h-10 p-2 rounded-2xl bg-white" placeholder="Search for your notes"/>
+    <input type="text" class="w-7/12 h-10 p-2 rounded-2xl bg-white" (input)="searchItems($event)" placeholder="Search for your notes"/>
     <div class="m-3 w-10 hover:cursor-pointer">
         <button type="button" class="drop-shadow-lg">
             <div title="offline! login" 
