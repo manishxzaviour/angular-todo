@@ -3,8 +3,8 @@ spring:
     name: todo-backend
   datasource:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/${MYSQL_DATABASE:todoapp}?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
-    username: ${MYSQL_USER}
-    password: ${MYSQL_PASSWORD}
+    username: ${MYSQL_USER:D3_86801_Manish}
+    password: ${MYSQL_PASSWORD:launch}
   jpa:
     show-sql: true
     hibernate:
