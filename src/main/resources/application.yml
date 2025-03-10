@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: todo-backend
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/${MYSQL_DATABASE:todoapp}?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+
+
+
+JWT_SECRET_KEY: zpX2kOHr8WdBT0iRoBjdE32uVQcr5dl7yOvRpBjznWZFRl7KpCHdPGPTMmTC6uWs
+#JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+
+EXP_TIMEOUT: 86400000
